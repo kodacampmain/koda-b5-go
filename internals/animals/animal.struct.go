@@ -23,15 +23,24 @@ func (c Cat) GetColor() string {
 	return "Yellow"
 }
 
-type Animal interface {
+type IAnimal interface {
 	Sound() string
 	GetColor() string
 }
 
-func GetAnimalSound(animal Animal) {
+func GetAnimalSound(animal IAnimal) {
 	fmt.Println(animal.Sound())
 }
 
-func GetAnimalColor(animal Animal) {
+func GetDogSound() {
+	dog := Dog{}
+	fmt.Println(dog.Sound())
+}
+func GetCatSound() {
+	cat := Cat{}
+	fmt.Println(cat.Sound())
+}
+
+func GetAnimalColor(animal IAnimal) {
 	fmt.Println(animal.GetColor())
 }

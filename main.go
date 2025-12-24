@@ -70,10 +70,12 @@ func main() {
 	dog := animals.Dog{}
 	cat := animals.Cat{}
 	animals.GetAnimalColor(dog)
+	animals.GetAnimalColor(cat)
 	var HP = 100
 	fmt.Println("Get Attacked by the DOG")
 	fmt.Printf("Hp calculation:\n%d%d = %d\n", HP, dog.Attack(), HP+dog.Attack())
 	animals.GetAnimalSound(cat)
+	animals.GetAnimalSound(dog)
 	// panicable()
 	// os.Exit(0)
 }

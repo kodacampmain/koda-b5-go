@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/kodacampmain/koda-b5-go/internals/animals"
 	"github.com/kodacampmain/koda-b5-go/internals/pokemons"
 )
 
@@ -66,6 +67,13 @@ func main() {
 	bulbasaur.UpdatePokemonImage("bulbasaur.png")
 	fmt.Println(bulbasaur.GetPokemonImage())
 
+	dog := animals.Dog{}
+	cat := animals.Cat{}
+	animals.GetAnimalColor(dog)
+	var HP = 100
+	fmt.Println("Get Attacked by the DOG")
+	fmt.Printf("Hp calculation:\n%d%d = %d\n", HP, dog.Attack(), HP+dog.Attack())
+	animals.GetAnimalSound(cat)
 	// panicable()
 	// os.Exit(0)
 }

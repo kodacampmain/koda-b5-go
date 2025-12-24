@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
@@ -35,7 +36,13 @@ func main() {
 	// pokemons.GetPokemon()
 	// userinput.Init()
 	defer fmt.Println("Bye Bye")
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Printf("Recovery from Panic: %v\n", r)
+		}
+	}()
 	myFunc()
+	panicable()
 	os.Exit(0)
 }
 
@@ -48,4 +55,20 @@ func myFunc() {
 	// createDatabaseConnection
 	// defer closeDatabaseConnection
 	// jalankan query untuk ambil data
+}
+
+func panicable() {
+	defer fmt.Println("Selamat Tinggal")
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Printf("Recovery from Panic: %v\n", r)
+		}
+	}()
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	input := scanner.Text()
+	if input == "panic" {
+		panic("terjadi panic")
+		// fmt.Println("Waduh")
+	}
 }

@@ -9,11 +9,20 @@ type Abilities struct {
 	Name     string
 	IsHidden bool
 }
+
+type gender string
+
+const (
+	female gender = "female"
+	male   gender = "male"
+)
+
 type pokemon struct {
 	name      string
 	img       string
 	types     []string
 	abilities []Abilities
+	gender    gender
 	// timestamp time.Time
 }
 
@@ -24,6 +33,7 @@ func NewPokemon(name, img string, types []string, abilities []Abilities) *pokemo
 		img:       img,
 		types:     types,
 		abilities: abilities,
+		gender:    female,
 		// timestamp: time.Now(),
 	}
 }

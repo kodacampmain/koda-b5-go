@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/kodacampmain/koda-b5-go/internals/userinput"
+	"fmt"
+	"os"
 )
 
 func main() {
@@ -31,7 +32,20 @@ func main() {
 	// fmt.Println(string(ppn))
 	// l.PrintEvenNumber(10)
 	// arrayslice.ArrayAndSlice()
-
 	// pokemons.GetPokemon()
-	userinput.Init()
+	// userinput.Init()
+	defer fmt.Println("Bye Bye")
+	myFunc()
+	os.Exit(0)
+}
+
+func myFunc() {
+	// FILO => FIRST in LAST out
+	defer fmt.Println("Good Bye")
+	defer fmt.Println(1)
+	fmt.Println(2)
+	fmt.Println(3)
+	// createDatabaseConnection
+	// defer closeDatabaseConnection
+	// jalankan query untuk ambil data
 }

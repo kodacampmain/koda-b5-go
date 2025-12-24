@@ -7,13 +7,13 @@ import (
 )
 
 func Init() {
+	defer fmt.Println("Selamat Tinggal")
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Masukkan Pilihan: ")
 		scanner.Scan()
 		input := scanner.Text()
 		if input == "exit" {
-			fmt.Println("Selamat Tinggal")
 			break
 		}
 		if input == "1" {

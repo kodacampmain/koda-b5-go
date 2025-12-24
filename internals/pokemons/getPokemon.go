@@ -21,6 +21,7 @@ func GetPokemon() {
 		img:   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/101.png",
 		types: []string{"Electric"},
 	}
+	fmt.Println(electrode.GetPokemonNameWithType())
 
 	// exeggcute := pokemon{
 	// 	name: "Exeggcute",
@@ -31,6 +32,6 @@ func GetPokemon() {
 	// 	},
 	// }
 
-	fmt.Printf("Name: %s\nTypes: %s\n", electrode.name, electrode.types[0])
+	// fmt.Printf("Name: %s\nTypes: %s\n", electrode.name, electrode.types[0])
 	// fmt.Printf("Name: %s\nTypes: %v\n", electrode.name, electrode.types)
 }

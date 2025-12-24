@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+
+	"github.com/kodacampmain/koda-b5-go/internals/pokemons"
 )
 
 func main() {
@@ -42,8 +44,30 @@ func main() {
 		}
 	}()
 	myFunc()
-	panicable()
-	os.Exit(0)
+
+	str := "Hello World"
+	fmt.Printf("Value: %s\nReference: %v\n", str, &str)
+	// secondStr := str
+	var strPointer *string = &str
+	str = "World Hello"
+	fmt.Printf("Pointer: %v\nValue: %s\n", strPointer, *strPointer)
+
+	bulbasaur := pokemons.NewPokemon("bulbasaur", "bulbasaur.jpg", []string{"grass", "poison"}, []pokemons.Abilities{
+		{
+			Name:     "bulbasaur",
+			IsHidden: false,
+		},
+		{
+			Name:     "chlorophyll",
+			IsHidden: true,
+		},
+	})
+	fmt.Println(bulbasaur.GetPokemonNameWithType())
+	bulbasaur.UpdatePokemonImage("bulbasaur.png")
+	fmt.Println(bulbasaur.GetPokemonImage())
+
+	// panicable()
+	// os.Exit(0)
 }
 
 func myFunc() {

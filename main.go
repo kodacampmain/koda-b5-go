@@ -4,9 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-
-	"github.com/kodacampmain/koda-b5-go/internals/animals"
-	"github.com/kodacampmain/koda-b5-go/internals/pokemons"
+	"sync"
+	"time"
 )
 
 func main() {
@@ -38,49 +37,87 @@ func main() {
 	// arrayslice.ArrayAndSlice()
 	// pokemons.GetPokemon()
 	// userinput.Init()
-	defer fmt.Println("Bye Bye")
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("Recovery from Panic: %v\n", r)
+	// defer fmt.Println("Bye Bye")
+	// defer func() {
+	// 	if r := recover(); r != nil {
+	// 		fmt.Printf("Recovery from Panic: %v\n", r)
+	// 	}
+	// }()
+	// MyFunc()
+
+	// str := "Hello World"
+	// fmt.Printf("Value: %s\nReference: %v\n", str, &str)
+	// secondStr := str
+	// var strPointer *string = &str
+	// str = "World Hello"
+	// fmt.Printf("Pointer: %v\nValue: %s\n", strPointer, *strPointer)
+
+	// bulbasaur := pokemons.NewPokemon("bulbasaur", "bulbasaur.jpg", []string{"grass", "poison"}, []pokemons.Abilities{
+	// 	{
+	// 		Name:     "bulbasaur",
+	// 		IsHidden: false,
+	// 	},
+	// 	{
+	// 		Name:     "chlorophyll",
+	// 		IsHidden: true,
+	// 	},
+	// })
+	// fmt.Println(bulbasaur.GetPokemonNameWithType())
+	// bulbasaur.UpdatePokemonImage("bulbasaur.png")
+	// fmt.Println(bulbasaur.GetPokemonImage())
+
+	// dog := animals.Dog{}
+	// cat := animals.Cat{}
+	// animals.GetAnimalColor(dog)
+	// animals.GetAnimalColor(cat)
+	// var HP = 100
+	// fmt.Println("Get Attacked by the DOG")
+	// fmt.Printf("Hp calculation:\n%d%d = %d\n", HP, dog.Attack(), HP+dog.Attack())
+	// animals.GetAnimalSound(cat)
+	// animals.GetAnimalSound(dog)
+	// Panicable()
+	// os.Exit(0)
+
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for range 5 {
+			time.Sleep(time.Millisecond * 100)
+			fmt.Println("Hello")
 		}
 	}()
-	myFunc()
-
-	str := "Hello World"
-	fmt.Printf("Value: %s\nReference: %v\n", str, &str)
-	// secondStr := str
-	var strPointer *string = &str
-	str = "World Hello"
-	fmt.Printf("Pointer: %v\nValue: %s\n", strPointer, *strPointer)
-
-	bulbasaur := pokemons.NewPokemon("bulbasaur", "bulbasaur.jpg", []string{"grass", "poison"}, []pokemons.Abilities{
-		{
-			Name:     "bulbasaur",
-			IsHidden: false,
-		},
-		{
-			Name:     "chlorophyll",
-			IsHidden: true,
-		},
+	// wg.Add(1)
+	// go func() {
+	// 	defer wg.Done()
+	// 	for range 5 {
+	// 		time.Sleep(time.Millisecond * 100)
+	// 		fmt.Println("Halo")
+	// 	}
+	// }()
+	wg.Go(func() {
+		for range 5 {
+			time.Sleep(time.Millisecond * 100)
+			fmt.Println("Halo")
+		}
 	})
-	fmt.Println(bulbasaur.GetPokemonNameWithType())
-	bulbasaur.UpdatePokemonImage("bulbasaur.png")
-	fmt.Println(bulbasaur.GetPokemonImage())
-
-	dog := animals.Dog{}
-	cat := animals.Cat{}
-	animals.GetAnimalColor(dog)
-	animals.GetAnimalColor(cat)
-	var HP = 100
-	fmt.Println("Get Attacked by the DOG")
-	fmt.Printf("Hp calculation:\n%d%d = %d\n", HP, dog.Attack(), HP+dog.Attack())
-	animals.GetAnimalSound(cat)
-	animals.GetAnimalSound(dog)
-	// panicable()
-	// os.Exit(0)
+	// wg.Go(func() {
+	// 	defer func() {
+	// 		if r := recover(); r != nil {
+	// 			fmt.Println(r)
+	// 		}
+	// 	}()
+	// 	for i := range 5 {
+	// 		fmt.Println(i)
+	// 		if i == 3 {
+	// 			panic("waduh")
+	// 		}
+	// 	}
+	// })
+	wg.Wait()
 }
 
-func myFunc() {
+func MyFunc() {
 	// FILO => FIRST in LAST out
 	defer fmt.Println("Good Bye")
 	defer fmt.Println(1)
@@ -91,7 +128,7 @@ func myFunc() {
 	// jalankan query untuk ambil data
 }
 
-func panicable() {
+func Panicable() {
 	defer fmt.Println("Selamat Tinggal")
 	defer func() {
 		if r := recover(); r != nil {

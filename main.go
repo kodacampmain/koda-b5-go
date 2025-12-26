@@ -79,14 +79,11 @@ func main() {
 	// os.Exit(0)
 
 	var wg sync.WaitGroup
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for range 5 {
-			time.Sleep(time.Millisecond * 100)
-			fmt.Println("Hello")
-		}
-	}()
+
+	helloChan := make(chan string, 4)
+
+	// wg.Add(1)
+	go GoHello(&wg, helloChan)
 	// wg.Add(1)
 	// go func() {
 	// 	defer wg.Done()
@@ -95,12 +92,7 @@ func main() {
 	// 		fmt.Println("Halo")
 	// 	}
 	// }()
-	wg.Go(func() {
-		for range 5 {
-			time.Sleep(time.Millisecond * 100)
-			fmt.Println("Halo")
-		}
-	})
+	// wg.Go(GoHalo)
 	// wg.Go(func() {
 	// 	defer func() {
 	// 		if r := recover(); r != nil {
@@ -114,7 +106,27 @@ func main() {
 	// 		}
 	// 	}
 	// })
-	wg.Wait()
+
+	for {
+		time.Sleep(time.Millisecond * 500)
+		strHello, ok := <-helloChan
+		if !ok {
+			break
+		}
+		// Simulasi ambil data dari db
+		fmt.Print("Dari Channel: ")
+		fmt.Println(strHello)
+
+		strHello2, ok := <-helloChan
+		if !ok {
+			break
+		}
+		// Simulasi ambil data dari db
+		// time.Sleep(time.Millisecond * 500)
+		fmt.Print("Dari Channel: ")
+		fmt.Println(strHello2)
+	}
+	// wg.Wait()
 }
 
 func MyFunc() {
@@ -143,3 +155,33 @@ func Panicable() {
 		// fmt.Println("Waduh")
 	}
 }
+
+func GoHello(wg *sync.WaitGroup, c chan string) {
+	defer func() {
+		fmt.Println("Pengiriman Selesai")
+		close(c)
+		// wg.Done()
+	}()
+	str := []string{"Virgil", "Rohman", "Bian", "Ghifar", "Ari"}
+	for _, v := range str {
+		// time.Sleep(time.Millisecond * 100)
+		// fmt.Println("Hello")
+		// randNumber := rand.Intn(4)
+		c <- v
+	}
+}
+
+func GoHalo() {
+	for range 5 {
+		time.Sleep(time.Millisecond * 100)
+		fmt.Println("Halo")
+	}
+}
+
+type Message struct{}
+
+func NewMessage() Message {
+	return Message{}
+}
+func Blackboard(mc chan Message)             {}
+func MsgSender(mc chan Message, msg Message) {}

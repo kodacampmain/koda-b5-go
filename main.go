@@ -6,6 +6,8 @@ import (
 	"os"
 	"sync"
 	"time"
+
+	"github.com/kodacampmain/koda-b5-go/internals/counter"
 )
 
 func main() {
@@ -78,12 +80,12 @@ func main() {
 	// Panicable()
 	// os.Exit(0)
 
-	var wg sync.WaitGroup
+	// var wg sync.WaitGroup
 
-	helloChan := make(chan string, 4)
+	// helloChan := make(chan string, 4)
 
 	// wg.Add(1)
-	go GoHello(&wg, helloChan)
+	// go GoHello(&wg, helloChan)
 	// wg.Add(1)
 	// go func() {
 	// 	defer wg.Done()
@@ -107,26 +109,28 @@ func main() {
 	// 	}
 	// })
 
-	for {
-		time.Sleep(time.Millisecond * 500)
-		strHello, ok := <-helloChan
-		if !ok {
-			break
-		}
-		// Simulasi ambil data dari db
-		fmt.Print("Dari Channel: ")
-		fmt.Println(strHello)
+	// for {
+	// 	time.Sleep(time.Millisecond * 500)
+	// 	strHello, ok := <-helloChan
+	// 	if !ok {
+	// 		break
+	// 	}
+	// 	// Simulasi ambil data dari db
+	// 	fmt.Print("Dari Channel: ")
+	// 	fmt.Println(strHello)
 
-		strHello2, ok := <-helloChan
-		if !ok {
-			break
-		}
-		// Simulasi ambil data dari db
-		// time.Sleep(time.Millisecond * 500)
-		fmt.Print("Dari Channel: ")
-		fmt.Println(strHello2)
-	}
+	// 	strHello2, ok := <-helloChan
+	// 	if !ok {
+	// 		break
+	// 	}
+	// 	// Simulasi ambil data dari db
+	// 	// time.Sleep(time.Millisecond * 500)
+	// 	fmt.Print("Dari Channel: ")
+	// 	fmt.Println(strHello2)
+	// }
 	// wg.Wait()
+
+	counter.RunCounter()
 }
 
 func MyFunc() {

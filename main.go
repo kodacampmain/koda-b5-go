@@ -4,10 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 	"sync"
 	"time"
-
-	"github.com/kodacampmain/koda-b5-go/internals/counter"
 )
 
 func main() {
@@ -130,7 +129,24 @@ func main() {
 	// }
 	// wg.Wait()
 
-	counter.RunCounter()
+	// counter.RunCounter()
+	// workers.WorkerUnion()
+	var caesar CaesarCipher
+	text := "bian"
+	fmt.Println(text)
+	cphr := caesar.Encrypt(text, 2)
+	fmt.Println(cphr)
+	pln := caesar.Decrypt(cphr, 2)
+	fmt.Println(pln)
+
+	x := XorEncryption{key: "buah"}
+	txt := "pisangambon"
+	fmt.Println(txt)
+	cip := x.Encrypt(txt)
+	fmt.Println(cip)
+	pla := x.Decrypt(cip)
+	fmt.Println(pla)
+
 }
 
 func MyFunc() {
@@ -189,3 +205,65 @@ func NewMessage() Message {
 }
 func Blackboard(mc chan Message)             {}
 func MsgSender(mc chan Message, msg Message) {}
+
+type CaesarCipher struct{}
+
+func (c CaesarCipher) Encrypt(plaintext string, distance int) (ciphertext string) {
+	plainAscii := []byte(plaintext)
+	cipherAscii := make([]byte, len(plainAscii))
+	for i, v := range plainAscii {
+		cipherAscii[i] = v + byte(distance)
+	}
+	return string(cipherAscii)
+}
+
+func (c CaesarCipher) Decrypt(ciphertext string, distance int) (plaintext string) {
+	// fmt.Println(ciphertext)
+	cipherAscii := []byte(ciphertext)
+	// fmt.Println(cipherAscii, len(cipherAscii))
+	plainAscii := make([]byte, len(cipherAscii))
+	for i, v := range cipherAscii {
+		plainAscii[i] = v - byte(distance)
+	}
+	// fmt.Println(plainAscii)
+	return string(plainAscii)
+}
+
+type XorEncryption struct {
+	key string
+}
+
+func (x *XorEncryption) Encrypt(pln string) []byte {
+	// pisangambon
+	// buah
+	plain := []byte(strings.ToLower(pln))
+	actualKey := make([]byte, 0, len(plain))
+	for len(actualKey) < len(pln) {
+		actualKey = append(actualKey, []byte(x.key)...)
+	}
+	// fmt.Println(actualKey)
+	if len(x.key) > len(pln) {
+		actualKey = actualKey[:len(plain)]
+	}
+	cip := make([]byte, len(plain))
+	// fmt.Println(len(plain), len(cip), len(actualKey))
+	for i, v := range plain {
+		cip[i] = v ^ actualKey[i]
+	}
+	return cip
+}
+
+func (x *XorEncryption) Decrypt(cip []byte) string {
+	actualKey := make([]byte, 0, len(cip))
+	for len(actualKey) < len(cip) {
+		actualKey = append(actualKey, []byte(x.key)...)
+	}
+	if len(x.key) > len(cip) {
+		actualKey = actualKey[:len(cip)]
+	}
+	pln := make([]byte, len(cip))
+	for i, v := range cip {
+		pln[i] = v ^ actualKey[i]
+	}
+	return string(pln)
+}
